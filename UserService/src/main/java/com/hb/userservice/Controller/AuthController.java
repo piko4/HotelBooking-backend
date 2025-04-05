@@ -8,14 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
 
-import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000/", allowCredentials = "true")
 public class AuthController
 {
 
@@ -33,55 +32,56 @@ public class AuthController
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user, HttpSession session)
-    {
+    public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
+        Optional<User> existingUser = userService.findByEmail(user.getEmail());
 
-        Optional<User> existingUser = userService.findByUsername(user.getUsername());
-
-        if (existingUser.isPresent())
-        {
-            String storedPasswordHash = existingUser.get().getPassword();
-            System.out.println("User found. Stored Hashed Password: " + storedPasswordHash);
-
-            boolean passwordMatches = passwordEncoder.matches(user.getPassword(), storedPasswordHash);
-            System.out.println("Password Match: " + passwordMatches);
-
-            if (passwordMatches)
-            {
-                session.setAttribute("user", existingUser.get()); // Store user in session
-                return "Login successful!";
-            }
-        } else
-        {
-            System.out.println("User not found in DB.");
+        if (existingUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials!");
         }
 
-        return "Invalid credentials!";
+        User foundUser = existingUser.get();
+        boolean passwordMatches = passwordEncoder.matches(user.getPassword(), foundUser.getPassword());
+
+        if (!passwordMatches) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials!");
+        }
+
+        session.setAttribute("user", foundUser); // Store user in session
+
+        // Return user details (excluding sensitive info like password)
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Login successful!");
+        response.put("user", Map.of(
+                "id", foundUser.getId(),
+                "username", foundUser.getUsername(),
+                "email", foundUser.getEmail()
+        ));
+
+        return ResponseEntity.ok(response);
     }
+
 
 
     @GetMapping("/logout")
     public ResponseEntity<?> logout(HttpSession session)
     {
-        session.invalidate();
-        if (session.getAttribute("user") == null)
-        {
+        if (session.getAttribute("user") == null) {
             return ResponseEntity.ok("alerady logged out");
         }
+        session.invalidate();
         return ResponseEntity.ok("User logged out successfully!");
     }
 
 
     @GetMapping("/user")
-    public ResponseEntity<?> getSessionUser(HttpSession session)
-    {
+    public ResponseEntity<?> getUser(HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null)
-        {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in!");
+        if (user != null) {
+            User updatedUser=userService.findByID(user.getId());
+            return ResponseEntity.ok(updatedUser);
         }
-
-        return ResponseEntity.ok(user);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No user logged in");
     }
+
 
 }

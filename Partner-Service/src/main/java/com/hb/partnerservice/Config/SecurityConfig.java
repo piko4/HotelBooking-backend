@@ -1,5 +1,4 @@
-package com.hb.userservice.Config;
-
+package com.hb.partnerservice.Config;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
@@ -9,22 +8,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig
+{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for Postman testing (enable properly in production)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/register", "/auth/user", "/auth/logout").permitAll() // Allow login & register
+                        .requestMatchers("/auth/login", "/auth/register", "/auth/partner", "/auth/logout").permitAll() // Allow login & register
                         .anyRequest().authenticated() // Other APIs require authentication
                 )
                 .sessionManagement(session -> session
@@ -35,7 +30,7 @@ public class SecurityConfig {
                         .logoutUrl("/auth/logout") // Explicitly set logout URL
                         .logoutSuccessHandler((request, response, authentication) -> {
                             response.setStatus(HttpServletResponse.SC_OK);
-                            response.getWriter().write("User logged out successfully!");
+                            response.getWriter().write("Partner logged out successfully!");
                         })
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
