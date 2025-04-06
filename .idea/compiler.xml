@@ -10,15 +10,6 @@
         <module name="api-gateway" />
         <module name="service-registry" />
       </profile>
-      <profile name="Annotation profile for Partner-Service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-        </processorPath>
-        <module name="Partner-Service" />
-      </profile>
       <profile name="Annotation profile for UserService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -29,11 +20,22 @@
         </processorPath>
         <module name="UserService" />
       </profile>
+      <profile name="Annotation profile for Reservation-Service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="Reservation-Service" />
+        <module name="Partner-Service" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Partner-Service" options="-parameters" />
+      <module name="Reservation-Service" options="-parameters" />
       <module name="UserService" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="service-registry" options="-parameters" />

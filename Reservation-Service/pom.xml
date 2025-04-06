@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.HB</groupId>
-    <artifactId>Partner-Service</artifactId>
+    <artifactId>Reservation-Service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Partner-Service</name>
-    <description>Partner-Service</description>
+    <name>Reservation-Service</name>
+    <description>Reservation-Service</description>
     <url/>
     <licenses>
         <license/>
@@ -34,10 +34,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -75,11 +71,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

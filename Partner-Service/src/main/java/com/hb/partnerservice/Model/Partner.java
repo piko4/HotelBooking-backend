@@ -1,9 +1,8 @@
 package com.hb.partnerservice.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.UUID;
@@ -15,9 +14,14 @@ public class Partner
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    @NotBlank
     private String partnername;
+    @Column(unique = true)
+    @NotBlank
     private String email;
-    private String phone;
+    @NotNull
+    private Long phone;
+    @NotBlank
     private String password;
 
 }
