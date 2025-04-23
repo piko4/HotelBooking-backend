@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,7 +31,9 @@ public class Property
 
     private String zipCode;
 
-    private int numberOfRooms;
+    private int totalRooms;
+    private int reservedRooms;
+    private int availableRooms;
 
     private double pricePerNight;
 
@@ -38,7 +42,7 @@ public class Property
     private String imageUrl;
 
     // Relationship with Partner
-    private Long partnerId; // You can use this to identify which partner owns this property
+    private UUID partnerId; // You can use this to identify which partner owns this property
 
     // Timestamp
     private LocalDateTime createdAt;
@@ -56,5 +60,9 @@ public class Property
     {
         this.updatedAt = LocalDateTime.now();
     }
+
+    //------------------------------reviews-------------
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
 
 }

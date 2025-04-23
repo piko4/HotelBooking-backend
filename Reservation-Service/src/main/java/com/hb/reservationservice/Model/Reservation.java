@@ -13,10 +13,10 @@ public class Reservation
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-    private Long propertyId; // The property being booked
+    private UUID Id;
+    private UUID propertyId; // The property being booked
 
-    private Long userId;     // The user who booked it
+    private UUID userId;     // The user who booked it
 
     private LocalDate checkInDate;
     private LocalDate checkOutDate;

@@ -11,4 +11,8 @@ import java.util.UUID;
 public interface PropertyRepository extends JpaRepository<Property, UUID>
 {
     List<Property> findByTypeIgnoreCase(String type);
+
+    List<Property> findAllByPartnerId(UUID partnerId);
+
+    List<Property> findAllByAddressContainsIgnoreCase(String location);
 }
