@@ -47,7 +47,7 @@ public class ReservationService
     {
         reservationRepository.findById(id).ifPresent(reservation -> {
             reservation.setStatus("CANCELLED");
-            reservationRepository.save(reservation);
+            reservationRepository.delete(reservation);
         });
     }
 }

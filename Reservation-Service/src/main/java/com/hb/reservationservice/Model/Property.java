@@ -61,8 +61,4 @@ public class Property
         this.updatedAt = LocalDateTime.now();
     }
 
-    //------------------------------reviews-------------
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
-    private List<Review> reviews = new ArrayList<>();
-
 }

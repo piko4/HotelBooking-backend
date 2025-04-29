@@ -22,7 +22,7 @@ public class Reservation
     private LocalDate checkOutDate;
 
     private int numberOfGuests;
-
+    private int numberOfRooms;
     private double totalPrice;
 
     private String status; // BOOKED, CANCELLED, COMPLETED

@@ -14,12 +14,11 @@ public class Review {
     private UUID id;
 
     private String userName;
+    private UUID userId;
     private int rating; // from 1 to 5
     private String comment;
 
-    @ManyToOne
-    @JoinColumn(name = "property_id")
-    private Property property;
+    private UUID propertyId;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 }
