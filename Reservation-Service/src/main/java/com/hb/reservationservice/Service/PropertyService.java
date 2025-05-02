@@ -44,4 +44,15 @@ public class PropertyService
     {
         return propertyRepository.findById(id);
     }
+
+    public Property getPropertyById(UUID propertyId)
+    {
+        return propertyRepository.findById(propertyId)
+                .orElseThrow(() -> new RuntimeException("Property not found"));
+    }
+
+    public void updateProperty(Property property)
+    {
+        propertyRepository.save(property);
+    }
 }
